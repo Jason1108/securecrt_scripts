@@ -16,11 +16,12 @@ function get_date()
 end function
 
 function sendl(x)
-	crt.Screen.Send(x & chr(13))
+	'crt.Screen.Send(x & chr(13))
+	crt.Screen.Send(x & vbCR)
 end function
 
 sub confirm_ssh()
-	if crt.Screen.WaitForString("Are you sure you want to continue connecting", 1) then
+	if crt.Screen.WaitForString("Are you sure you want to continue connecting", 5) then
 		sendl("yes")
 	end if
 end sub
@@ -39,6 +40,13 @@ sub change_load()
 end sub
 
 sub make_load()
+	'confirm path of the repo
+	sendl("echo $REPO_CORIANTOS")
+	crt.Screen.WaitForString("Coriant")
+	screenrow = crt.screen.CurrentRow - 1
+	MsgBox "making load for " & split(crt.Screen.Get(screenrow, 1, screenrow, 40 )," ")(0)
+	
+	'start making load
 	crt.Screen.Send "groove;mk -j 16;mk load" & chr(13)
 	crt.Screen.WaitForString "Compilation took"
 	sendl("rm /home/" & user & "/.ssh/known_hosts") 'rm /home/zzhang2/.ssh/known_hosts
