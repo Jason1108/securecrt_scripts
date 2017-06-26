@@ -11,6 +11,14 @@ function getDateStr()
 	getDateStr=CStr( Year(Date)) & Right("0" & Month(Date), 2) & Right("0" & Day(Date), 2)
 end function
 
+sub bc()
+
+end sub
+
+sub appfs()
+
+end
+
 Sub Main
 	crt.Screen.Send("reboot")
 	crt.Screen.WaitForString("uboot")
